@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 import imutils
 import cv2
+from PIL import Image
 
 class Panorama:
 
@@ -122,20 +123,16 @@ class Panorama:
 #Take picture from folder like: Hill1 & Hill2, scene1 & scene2, my1 & my2, taj1 & taj2, lotus1 & lotus2, beach1 & beach2, room1 & room2
 
 class Stitch:
-    print("Enter the number of images you want to concantenate:")
-    no_of_images = int(input())
-    print("Enter the image name in order of left to right in way of concantenation:")
+    no_of_images = 5
     #like taj1.jpg, taj2.jpg, taj3.jpg .... tajn.jpg
-    filename = []
-
-    for i in range(no_of_images):
-        print("Enter the %d image:" %(i+1))
-        filename.append(input())
+    filename = ["./test_images/pano1.jpg", "./test_images/pano2.jpg", "./test_images/pano3.jpg", "./test_images/pano4.jpg", "./test_images/pano5.jpg"]
 
     images = []
 
     for i in range(no_of_images):
-        images.append(cv2.imread(filename[i]))
+        images.append(cv2.imread(filename[i])[800:1600, 1050:2200,])
+        cv2.imshow("cropped", cv2.imread(filename[i])[800:1600, 1050:2200])
+
 
     #We need to modify the image resolution and keep our aspect ratio use the function imutils
 
@@ -146,7 +143,7 @@ class Stitch:
         images[i] = imutils.resize(images[i], height=400)
 
 
-    panaroma = Panaroma()
+    panaroma = Panorama()
     if no_of_images==2:
         (result, matched_points) = panaroma.image_stitch([images[0], images[1]], match_status=True)
     else:
