@@ -39,7 +39,7 @@ class Scheduler():
         cron = CronTab(user=True)
         cron.remove_all()
         current_path = os.path.dirname(os.path.abspath(__file__))
-        job = cron.new(command="python3 " + current_path + "\controller.py", comment= "Name: " + name)
+        job = cron.new(command="python3 " + current_path + "\controller.py " + name)
         job.minute.on(0)
         job.day.every(1)
         for hour in dose_hours:
