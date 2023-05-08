@@ -33,17 +33,26 @@ class Scheduler():
         # if hours_missed:
         #     num_days +=1
         self.schedule(dose_hours, name)
+        self.add_counter(name, quantity)
     
     def schedule(self, dose_hours, name = ""):
         cron = CronTab(user=True)
         cron.remove_all()
         current_path = os.path.dirname(os.path.abspath(__file__))
-        job = cron.new(command="python3 " + current_path + "controller.py", comment= "Name: " + name)
+        job = cron.new(command="python3 " + current_path + "\controller.py", comment= "Name: " + name)
+        job.minute.on(0)
         job.day.every(1)
         for hour in dose_hours:
             job.hour.also.on(hour)
 
-        print("Crontab Information:\n")
+        #print("Crontab Information:\n")
         for job in cron:
             print(job) 
         #cron.write()
+
+    def add_counter(self, name, quantity):
+        # Adds line containing name and qty to
+        with open("Counter.txt", "a+") as file:
+            if name not in file.read():
+                line = f"{name} {quantity}\n"
+                file.write(line)
