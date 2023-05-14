@@ -1,7 +1,7 @@
 from crontab import CronTab
 import os.path
 import time
-import numpy as np
+import json
 import subprocess
 
 class Scheduler():
@@ -50,9 +50,13 @@ class Scheduler():
             print(job) 
         #cron.write()
 
-    def add_counter(self, name, quantity):
-        # Adds line containing name and qty to
-        with open("Counter.txt", "a+") as file:
-            if name not in file.read():
-                line = f"{name} {quantity}\n"
-                file.write(line)
+    def add_counter(self, name, quantity):        
+        with open("Counter.json", "r") as file:
+            data = json.load(file)
+            entry = {"name": name, "quantity": quantity}
+            name_list = [data["medications"][i]["name"] for i in range(len(data["medications"]))]
+            if name not in name_list:
+                data["medications"].append(entry)
+        
+        with open("Counter.json", "w") as file:
+            json.dump(data, file, indent=2, sort_keys=True)

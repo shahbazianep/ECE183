@@ -1,6 +1,7 @@
 import ocr
 import scheduler
 import sys
+import json
 
 # o = ocr.OCR()
 # s = scheduler.Scheduler()
@@ -12,16 +13,12 @@ import sys
 
 med_name = sys.argv[1]
 
-file = open("Counter.txt", "r")
+with open("Counter.json", "r") as file:
+    data = json.load(file)
+    med_list = data["medications"]
+    for medications in med_list:
+        if medications["name"] == med_name:
+            medications["quantity"] -= 1
 
-
-file_contents = file.readlines()
-for i in range(len(file_contents)):
-    if med_name in file_contents[i]:
-        quantity = int(file_contents[i].split()[1])
-        new_line = f"{med_name} {quantity-1}\n"
-        file_contents[i] = new_line
-
-write_file = open("Counter.txt", "w")
-write_file.writelines(file_contents)
-file.close()
+with open("Counter.json", "w") as file:
+    json.dump(data, file, indent=2, sort_keys=True)
