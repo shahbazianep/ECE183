@@ -16,9 +16,14 @@ med_name = sys.argv[1]
 with open("Counter.json", "r") as file:
     data = json.load(file)
     med_list = data["medications"]
+    index = 0
     for medications in med_list:
         if medications["name"] == med_name:
             medications["quantity"] -= 1
+            if medications["quantity"] == 0:
+                med_list.pop(index)
+        index += 1
+
 
 with open("Counter.json", "w") as file:
     json.dump(data, file, indent=2, sort_keys=True)
