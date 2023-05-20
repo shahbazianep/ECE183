@@ -2,6 +2,7 @@ import ocr
 import scheduler
 import sys
 import json
+from crontab import CronTab
 
 # o = ocr.OCR()
 # s = scheduler.Scheduler()
@@ -21,6 +22,12 @@ with open("Counter.json", "r") as file:
         if medications["name"] == med_name:
             medications["quantity"] -= 1
             if medications["quantity"] == 0:
+                cron = CronTab(user=True)
+                name = med_list[index]["name"]
+                for job in cron:
+                    if job.comment == name:
+                        job.clear()
+                cron.write()
                 med_list.pop(index)
         index += 1
 

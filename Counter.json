@@ -19,6 +19,10 @@
     {
       "name": "E",
       "quantity": 77
+    },
+    {
+      "name": "F",
+      "quantity": 5
     }
   ]
 }
