@@ -1,28 +1,13 @@
 {
+  "containers": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
   "medications": [
-    {
-      "name": "A",
-      "quantity": 58
-    },
-    {
-      "name": "B",
-      "quantity": 40
-    },
-    {
-      "name": "C",
-      "quantity": 35
-    },
-    {
-      "name": "D",
-      "quantity": 50
-    },
-    {
-      "name": "E",
-      "quantity": 77
-    },
-    {
-      "name": "F",
-      "quantity": 5
-    }
   ]
 }

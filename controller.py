@@ -27,7 +27,9 @@ with open("Counter.json", "r") as file:
                 for job in cron:
                     if job.comment == name:
                         cron.remove(job)
-                cron.write()
+                #cron.write()
+                container_index = medications["container"]
+                data["containers"][container_index] = 0
                 med_list.pop(index)
         index += 1
 

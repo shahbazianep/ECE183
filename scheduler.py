@@ -44,12 +44,19 @@ class Scheduler():
         #print("Crontab Information:\n")
         for job in cron:
             print(job) 
-        cron.write()
+        #cron.write()
 
     def add_counter(self, name, quantity):        
         with open("Counter.json", "r") as file:
             data = json.load(file)
-            entry = {"name": name, "quantity": quantity}
+            containers = data["containers"]
+            # Check if any containers are available
+            if 0 not in containers:
+                print("Error: All contrainers are occupied")
+                assert(False)
+            container_index = containers.index(0) # Find index of first available pill container
+            data["containers"][container_index] = 1
+            entry = {"name": name, "quantity": quantity, "container": container_index}
             name_list = [data["medications"][i]["name"] for i in range(len(data["medications"]))]
             if name not in name_list:
                 data["medications"].append(entry)
